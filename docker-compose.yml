@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  httpd:
+    build:
+      context: ./httpd
+    container_name: httpd
+    restart: always
+    ports:
+    - "80:80"
+    networks:
+      php_net:
+        ipv4_address: 180.18.0.10
+
+  php8:
+    build:
+      context: ./php8
+    container_name: php8
+    restart: always
+    networks:
+      php_net:
+        ipv4_address: 180.18.0.20
+
+  php7:
+    build:
+      context: ./php7
+    container_name: php7
+    restart: always
+    networks:
+      php_net:
+        ipv4_address: 180.18.0.30
+
+networks:
+  php_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 180.18.0.0/24
