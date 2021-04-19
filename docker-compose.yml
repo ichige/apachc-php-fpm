@@ -7,6 +7,8 @@ services:
     restart: always
     ports:
     - "80:80"
+    volumes:
+    - ./httpd/conf:/root/conf
     networks:
       php_net:
         ipv4_address: 180.18.0.10
