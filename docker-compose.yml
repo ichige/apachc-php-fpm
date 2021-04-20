@@ -9,6 +9,8 @@ services:
     - "80:80"
     volumes:
     - ./httpd/conf:/root/conf
+    - ./httpd/html:/var/www/php8
+    - ./httpd/html:/var/www/php7
     networks:
       php_net:
         ipv4_address: 180.18.0.10
@@ -18,6 +20,8 @@ services:
       context: ./php8
     container_name: php8
     restart: always
+    volumes:
+    - ./httpd/src:/var/www/php8
     networks:
       php_net:
         ipv4_address: 180.18.0.20
@@ -27,6 +31,8 @@ services:
       context: ./php7
     container_name: php7
     restart: always
+    volumes:
+    - ./httpd/src:/var/www/php7
     networks:
       php_net:
         ipv4_address: 180.18.0.30
