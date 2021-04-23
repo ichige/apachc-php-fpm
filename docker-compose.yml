@@ -9,11 +9,12 @@ services:
     - "80:80"
     volumes:
     - ./httpd/conf:/root/conf
-    - ./httpd/html:/var/www/php8
-    - ./httpd/html:/var/www/php7
+    - ./httpd/html:${V8_DOCUMENT_ROOT}
+    - ./httpd/html:${V7_DOCUMENT_ROOT}
+    env_file: .env
     networks:
       php_net:
-        ipv4_address: 180.18.0.10
+        ipv4_address: ${HTTPD_IP_ADDRESS}
 
   php8:
     build:
@@ -21,10 +22,10 @@ services:
     container_name: php8
     restart: always
     volumes:
-    - ./httpd/src:/var/www/php8
+    - ./httpd/src:${V8_DOCUMENT_ROOT}
     networks:
       php_net:
-        ipv4_address: 180.18.0.20
+        ipv4_address: ${PHP8_IP_ADDRESS}
 
   php7:
     build:
@@ -32,10 +33,10 @@ services:
     container_name: php7
     restart: always
     volumes:
-    - ./httpd/src:/var/www/php7
+    - ./httpd/src:${V7_DOCUMENT_ROOT}
     networks:
       php_net:
-        ipv4_address: 180.18.0.30
+        ipv4_address: ${PHP7_IP_ADDRESS}
 
 networks:
   php_net:
@@ -43,4 +44,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 180.18.0.0/24
+        - subnet: ${PHP_NET_SUBNET}
